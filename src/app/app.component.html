@@ -1,0 +1,37 @@
+<div class="container">
+    <app-hello></app-hello>
+  
+    <!-- Booking Form -->
+    <div class="booking-form">
+      <label for="seatCount">Number of Seats:</label>
+      <input
+        type="number"
+        id="seatCount"
+        [(ngModel)]="seatCount"
+        min="1"
+        max="7"
+        required
+        placeholder="1-7"
+      />
+      <button (click)="bookSeats(seatCount)">Book Seats</button>
+    </div>
+  
+    <!-- Seating Area -->
+    <div class="seating">
+      <div *ngFor="let row of rows" class="row">
+        <span
+          *ngFor="let seat of getSeatsForRow(row)"
+          [ngClass]="getSeatClass(seat)"
+          [@seatAnimation]="seat.isBooked ? 'booked' : 'available'"
+        >
+          {{ seat.seatId }}
+        </span>
+      </div>
+    </div>
+  
+    <!-- Booking Result -->
+    <div class="booking-result" *ngIf="bookingResult.length" [@resultAnimation]>
+      <p>Booked Seats: {{ bookingResult.join(', ') }}</p>
+    </div>
+  </div>
+  
